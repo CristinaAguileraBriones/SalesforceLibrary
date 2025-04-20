@@ -1,0 +1,9 @@
+.search-container {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding-right: 2rem; /* Espacio para spinner */
+}
