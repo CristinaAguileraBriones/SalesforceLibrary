@@ -1,0 +1,95 @@
+<template>
+  <div class="slds-container_center slds-p-around_xx-large">
+      <!-- Spinner de carga -->
+      <template if:true={isLoading}>
+          <div class="slds-align_absolute-center slds-m-top_xx-large">
+              <lightning-spinner alternative-text="Cargando..." size="large"></lightning-spinner>
+          </div>
+      </template>
+
+      <!-- Mensaje de error -->
+      <template if:true={error}>
+          <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_large">
+              <span class="slds-assistive-text">Error</span>
+              <h2>Error al cargar el libro</h2>
+              <p>{error.message}</p>
+          </div>
+      </template>
+
+      <!-- Contenido principal -->
+      <template if:true={book}>
+          <div class="slds-grid slds-wrap">
+              <!-- Columna izquierda: Portada -->
+              <div class="slds-col slds-size_1-of-3 slds-p-right_large">
+                  <div class="slds-card">
+                      <div class="slds-card__body slds-card__body_inner">
+                          <img src={book.volumeInfo.imageLinks.large} 
+                               alt={book.volumeInfo.title}
+                               class="book-cover-large"/>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Columna derecha: Detalles -->
+              <div class="slds-col slds-size_2-of-3">
+                  <div class="slds-card">
+                      <div class="slds-card__body slds-card__body_inner">
+                          <h1 class="slds-text-heading_large slds-m-bottom_small">{book.volumeInfo.title}</h1>
+                          
+                          <!-- Autores - Simplificado -->
+                          <div class="slds-m-bottom_small">
+                              <h2 class="slds-text-title slds-text-color_weak">
+                                  {book.volumeInfo.authors}
+                              </h2>
+                          </div>
+
+                          <!-- Botones de acción -->
+                          <div class="slds-m-bottom_large">
+                              <lightning-button 
+                                  label={isFavorite} 
+                                  variant={isFavorite}
+                                  icon-name={isFavorite}
+                                  onclick={handleAddToFavorites}
+                                  class="slds-m-right_small">
+                              </lightning-button>
+                              
+                              <lightning-button 
+                                  label={isReserved} 
+                                  variant={isReserved}
+                                  disabled={isReserved}
+                                  onclick={handleReserveBook}>
+                              </lightning-button>
+                          </div>
+
+                          <!-- Metadatos simplificados -->
+                          <div class="slds-grid slds-wrap slds-m-bottom_large">
+                              <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                  <span class="slds-text-title slds-text-color_weak">Publicación:</span>
+                                  <p>{book.volumeInfo.publishedDate}</p>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                  <span class="slds-text-title slds-text-color_weak">Editorial:</span>
+                                  <p>{book.volumeInfo.publisher}</p>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                  <span class="slds-text-title slds-text-color_weak">Páginas:</span>
+                                  <p>{book.volumeInfo.pageCount}</p>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                  <span class="slds-text-title slds-text-color_weak">Categorías:</span>
+                                  <p>{book.volumeInfo.categories</p>
+                              </div>
+                          </div>
+
+                          <!-- Descripción completa -->
+                          <div class="slds-m-bottom_large">
+                              <h2 class="slds-text-heading_medium slds-m-bottom_small">Descripción</h2>
+                              <p class="slds-text-body_regular">{book.volumeInfo.description}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </template>
+  </div>
+</template>

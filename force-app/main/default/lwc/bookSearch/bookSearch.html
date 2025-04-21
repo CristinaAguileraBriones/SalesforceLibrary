@@ -2,12 +2,11 @@
     <!-- Barra de búsqueda -->
     <c-book-search-bar onsearch={handleSearch}></c-book-search-bar>
     <!-- Lista de libros -->
-    <lightning-card title="Últimos Lanzamientos">
+    <lightning-card title={cardTitle}>
         <div class="slds-grid slds-wrap">
-            <!-- Muestra displayedBooks (contiene newReleases o resultados filtrados) -->
             <template for:each={displayedBooks} for:item="book">
                 <div key={book.id} class="slds-col slds-size_1-of-3 slds-p-around_medium">
-                    <div class="book-card">
+                    <div class="book-card" onclick={handleBookClick} data-id={book.id}>
                         <img 
                             src={book.volumeInfo.imageLinks.thumbnail} 
                             alt={book.volumeInfo.title}
@@ -23,29 +22,24 @@
                             </template>
                         </div>
 
-                        <!-- Descripción del libro -->
                         <div class="book-description">
                             <p>
-                                <!-- Mostrar descripción truncada o completa según el estado -->
-                                <template if:true={book.isDescriptionExpanded}>
+                                <template if:true={book.volumeInfo.isDescriptionExpanded}>
                                     {book.volumeInfo.description}
                                 </template>
-                                <template if:false={book.isDescriptionExpanded}>
+                                <template if:false={book.volumeInfo.isDescriptionExpanded}>
                                     {book.volumeInfo.truncatedDescription}
                                 </template>
                             </p>
                             
-                            <!-- Botón de Leer más / Leer menos -->
-                            <template if:true={book.isDescriptionExpanded}>
-                                <button class="read-more-btn" onclick={toggleDescriptionExpansion} data-id={book.id}>
+                            <button class="read-more-btn" onclick={toggleDescriptionExpansion} data-id={book.id}>
+                                <template if:true={book.volumeInfo.isDescriptionExpanded}>
                                     Leer menos
-                                </button>
-                            </template>
-                            <template if:false={book.isDescriptionExpanded}>
-                                <button class="read-more-btn" onclick={toggleDescriptionExpansion} data-id={book.id}>
+                                </template>
+                                <template if:false={book.volumeInfo.isDescriptionExpanded}>
                                     Leer más
-                                </button>
-                            </template>
+                                </template>
+                            </button>
                         </div>
                     </div>
                 </div>

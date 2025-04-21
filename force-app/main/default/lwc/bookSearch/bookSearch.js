@@ -1,7 +1,8 @@
 import { LightningElement, track } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation'; // Añade esta importación
 import getNewReleases from '@salesforce/apex/GoogleBooksController.getNewReleases';
 
-export default class bookSearch extends LightningElement {
+export default class bookSearch extends NavigationMixin(LightningElement) {
     @track newReleases = [];    // Almacena los 12 libros iniciales
     @track displayedBooks = []; // Libros a mostrar
     @track isLoading = true;
@@ -56,12 +57,33 @@ export default class bookSearch extends LightningElement {
     }
 
     toggleDescriptionExpansion(event) {
-        const bookId = event.target.dataset.id; // Obtener el id del libro
-        const book = this.displayedBooks.find(b => b.id === bookId); // Buscar el libro
+        event.stopPropagation(); // Añadir esto
+        const bookId = event.target.dataset.id;
+        const book = this.displayedBooks.find(b => b.id === bookId);
 
         if (book) {
-            book.isDescriptionExpanded = !book.isDescriptionExpanded; // Alternar el estado de la expansión
-            this.displayedBooks = [...this.displayedBooks]; // Hacer una copia para que se refleje el cambio en la interfaz
+            // Acceder a isDescriptionExpanded dentro de volumeInfo
+            book.volumeInfo.isDescriptionExpanded = !book.volumeInfo.isDescriptionExpanded;
+            this.displayedBooks = [...this.displayedBooks];
+        }
+    }
+
+    handleBookClick(event) {
+        // Verificación más robusta
+        if (!event.target.closest('button')) {
+            event.preventDefault();
+            const bookId = event.currentTarget.dataset.id;
+            
+            try {
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__webPage',
+                    attributes: {
+                        url: `/book-details?id=${bookId}`
+                    }
+                });
+            } catch (error) {
+                console.error('Navigation error:', error);
+            }
         }
     }
 }
