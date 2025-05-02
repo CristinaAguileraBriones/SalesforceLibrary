@@ -19,28 +19,23 @@ public with sharing class BookDetailsController {
         }
     }
     @AuraEnabled
-    public static void addToFavorites(String bookId) {
-        // Implementación para añadir a favoritos
-        // Ejemplo básico:
-        String userId = UserInfo.getUserId();
-        
-        // Verificar si ya existe en favoritos
-        List<Favorito__c> existingFavorites = [
+    public static void addToFavorites(String bookId, String title, String author) {
+        Id userId = UserInfo.getUserId();
+        List<Favorito__c> existing = [
             SELECT Id FROM Favorito__c 
-            WHERE 	Libro__c = :bookId AND Contact__c = :userId
+            WHERE LibroId__c = :bookId AND OwnerId = :userId
             LIMIT 1
         ];
-        
-        if (existingFavorites.isEmpty()) {
-            // Crear nuevo favorito
-            Favorito__c fav = new Favorito__c(
-                Libro__c = bookId,
-                Contact__c = userId
-            );
+
+        if (existing.isEmpty()) {
+            Favorito__c fav = new Favorito__c();
+            fav.LibroId__c = bookId;
+            fav.Titulo__c = title;
+            fav.Autor__c = author;
+            fav.OwnerId = userId;
             insert fav;
         } else {
-            // Eliminar favorito existente
-            delete existingFavorites;
+            throw new AuraHandledException('Este libro ya está en tus favoritos.');
         }
     }
     

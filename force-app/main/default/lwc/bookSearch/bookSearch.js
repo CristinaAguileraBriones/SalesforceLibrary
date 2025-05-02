@@ -78,7 +78,7 @@ export default class bookSearch extends NavigationMixin(LightningElement) {
                 this[NavigationMixin.Navigate]({
                     type: 'standard__webPage',
                     attributes: {
-                        url: `/book-details?id=${bookId}`
+                        url: `/booksdetails?id=${bookId}`
                     }
                 });
             } catch (error) {

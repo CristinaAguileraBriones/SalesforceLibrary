@@ -12,6 +12,22 @@ export default class BookPage extends LightningElement {
     @track isFavorite = false;
     @track isReserved = false;
 
+    get favoriteIcon() {
+        return this.isFavorite ? 'utility:favorite' : 'utility:like';
+    }
+    
+    get favoriteAltText() {
+        return this.isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos';
+    }
+    
+    get reserveIcon() {
+        return this.isReserved ? 'utility:lock' : 'utility:unlock';
+    }
+    
+    get reserveAltText() {
+        return this.isReserved ? 'Reservado' : 'Reservar';
+    }
+
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
         if (currentPageReference && currentPageReference.state?.id) {
@@ -82,7 +98,6 @@ export default class BookPage extends LightningElement {
         // 1. Si el libro está en favoritos del usuario
         // 2. Si el libro está reservado por el usuario
     }
-
     handleAddToFavorites() {
         this.isLoading = true;
         addToFavorites({ bookId: this.book.id })

@@ -77,7 +77,7 @@
                               </div>
                               <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
                                   <span class="slds-text-title slds-text-color_weak">Categorías:</span>
-                                  <p>{book.volumeInfo.categories</p>
+                                  <p>{book.volumeInfo.categories}</p>
                               </div>
                           </div>
 
@@ -85,6 +85,26 @@
                           <div class="slds-m-bottom_large">
                               <h2 class="slds-text-heading_medium slds-m-bottom_small">Descripción</h2>
                               <p class="slds-text-body_regular">{book.volumeInfo.description}</p>
+                              <div class="slds-m-bottom_large">
+                                <br>
+                                <!-- Botón de favorito (corazón) -->
+                                <lightning-button-icon
+                                    icon-name={favoriteIcon}
+                                    alternative-text={favoriteAltText}
+                                    onclick={handleAddToFavorites}
+                                    variant="border-filled"
+                                    class="slds-m-right_small">
+                                </lightning-button-icon>
+                            
+                                <!-- Botón de reserva (candado) -->
+                                <lightning-button-icon
+                                    icon-name={reserveIcon}
+                                    alternative-text={reserveAltText}
+                                    onclick={handleReserveBook}
+                                    variant="border-filled"
+                                    disabled={isReserved}>
+                                </lightning-button-icon>
+                            </div>
                           </div>
                       </div>
                   </div>
