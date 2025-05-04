@@ -33,7 +33,6 @@ export default class BookPage extends LightningElement {
         if (currentPageReference && currentPageReference.state?.id) {
             const bookId = currentPageReference.state.id;
             this.loadBookDetails(bookId);
-            this.checkBookStatus(bookId);
         }
     }
 
@@ -93,14 +92,10 @@ export default class BookPage extends LightningElement {
         return Array.isArray(categories) ? categories : [categories];
     }
 
-    checkBookStatus(bookId) {
-        // Aquí deberías implementar llamadas a Apex para verificar:
-        // 1. Si el libro está en favoritos del usuario
-        // 2. Si el libro está reservado por el usuario
-    }
     handleAddToFavorites() {
+        if (this.isLoading) return;  
         this.isLoading = true;
-        addToFavorites({ bookId: this.book.id })
+        addToFavorites({ bookId: this.book.id, title: this.book.volumeInfo.title, author: this.book.volumeInfo.authors.join(', ') })
             .then(() => {
                 this.isFavorite = !this.isFavorite;
                 const message = this.isFavorite ? 'Añadido a favoritos' : 'Eliminado de favoritos';

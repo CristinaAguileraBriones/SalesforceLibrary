@@ -42,25 +42,6 @@
                                   {book.volumeInfo.authors}
                               </h2>
                           </div>
-
-                          <!-- Botones de acción -->
-                          <div class="slds-m-bottom_large">
-                              <lightning-button 
-                                  label={isFavorite} 
-                                  variant={isFavorite}
-                                  icon-name={isFavorite}
-                                  onclick={handleAddToFavorites}
-                                  class="slds-m-right_small">
-                              </lightning-button>
-                              
-                              <lightning-button 
-                                  label={isReserved} 
-                                  variant={isReserved}
-                                  disabled={isReserved}
-                                  onclick={handleReserveBook}>
-                              </lightning-button>
-                          </div>
-
                           <!-- Metadatos simplificados -->
                           <div class="slds-grid slds-wrap slds-m-bottom_large">
                               <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
