@@ -30,7 +30,7 @@ export default class ReservationsPage extends LightningElement {
       const reservaId = event.target.dataset.id;
       try {
           await cancelReservation({ reservaId });
-          // Quitar la reserva eliminada del array para actualizar UI
+          
           this.reservations = this.reservations.filter(res => res.id !== reservaId);
       } catch (error) {
           console.error('Error al cancelar la reserva:', error);
