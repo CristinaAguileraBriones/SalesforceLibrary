@@ -3,6 +3,7 @@ import { CurrentPageReference } from 'lightning/navigation';
 import getBookDetails from '@salesforce/apex/BookDetailsController.getBookDetails';
 import addToFavorites from '@salesforce/apex/BookDetailsController.addToFavorites';
 import reserveBook from '@salesforce/apex/BookDetailsController.reserveBook';
+import createOrGetLibro from '@salesforce/apex/BookDetailsController.createOrGetLibro';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class BookPage extends LightningElement {
@@ -41,6 +42,22 @@ export default class BookPage extends LightningElement {
             .then(result => {
                 if (result) {
                     this.book = this.processBookData(result);
+                    const info = this.book.volumeInfo;
+                    createOrGetLibro({
+                        googleBookId: this.book.id,
+                        title: info.title || 'Sin título',
+                        author: info.authors?.join(', ') || 'Autor desconocido',
+                        description: info.description || 'Sin descripción',
+                    })
+                    .then(salesforceId => {
+                        this.salesforceBookId = salesforceId;
+                        console.log('salesforceId:', salesforceId);
+                    })
+                    .catch(error => {
+                        this.error = error;
+                        console.error('Error en createOrGetLibro:', error); 
+                        this.showToast('Error', this.getErrorMessage(error), 'error');
+                    });
                 } else {
                     throw new Error('Libro no encontrado');
                 }
@@ -102,7 +119,13 @@ export default class BookPage extends LightningElement {
                 this.showToast('Éxito', message, 'success');
             })
             .catch(error => {
-                this.showToast('Error', error.body.message, 'error');
+                const message = this.getErrorMessage(error);
+                const isAlreadyFavorite = message.includes('ya está en tus favoritos');
+                this.showToast(
+                    isAlreadyFavorite ? 'Atención' : 'Error',
+                    message,
+                    isAlreadyFavorite ? 'warning' : 'error'
+                );
             })
             .finally(() => {
                 this.isLoading = false;
@@ -111,13 +134,21 @@ export default class BookPage extends LightningElement {
 
     handleReserveBook() {
         this.isLoading = true;
-        reserveBook({ bookId: this.book.id })
+        if (!this.salesforceBookId) {
+            console.error('Salesforce Book ID no está definido');
+            this.showToast('Error', 'El libro aún no está listo para reservar. Intenta de nuevo en unos segundos.', 'error');
+            this.isLoading = false;
+            return;
+        }
+        reserveBook({ bookId: this.salesforceBookId })
             .then(() => {
                 this.isReserved = true;
                 this.showToast('Éxito', 'Libro reservado correctamente', 'success');
             })
             .catch(error => {
-                this.showToast('Error', error.body.message, 'error');
+            console.error('Error al reservar libro:', error);
+            const message = this.getErrorMessage(error);
+            this.showToast('Error', message, 'error');
             })
             .finally(() => {
                 this.isLoading = false;
@@ -130,5 +161,10 @@ export default class BookPage extends LightningElement {
             message,
             variant
         }));
+    }
+    getErrorMessage(error) {
+        if (error?.body?.message) return error.body.message;
+        if (error?.message) return error.message;
+        return 'Error desconocido al crear el libro';
     }
 }

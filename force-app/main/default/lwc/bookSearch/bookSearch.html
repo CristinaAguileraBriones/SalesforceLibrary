@@ -1,8 +1,9 @@
 <template>
     <!-- Barra de búsqueda -->
     <c-book-search-bar onsearch={handleSearch}></c-book-search-bar>
+
     <!-- Lista de libros -->
-    <lightning-card title={cardTitle}>
+    <lightning-card title={cardTitle} class="lightning-card">
         <div class="slds-grid slds-wrap">
             <template for:each={displayedBooks} for:item="book">
                 <div key={book.id} class="slds-col slds-size_1-of-3 slds-p-around_medium">

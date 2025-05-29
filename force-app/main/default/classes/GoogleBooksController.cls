@@ -1,9 +1,9 @@
 public with sharing class GoogleBooksController {
-    // Método para buscar libros con conversión segura de tipos
+    
     @AuraEnabled
     public static List<Map<String, Object>> searchBooks(String searchTerm) {
         try {
-            // Validación de entrada
+            
             if (String.isBlank(searchTerm)) {
                 throw new CalloutException('El término de búsqueda no puede estar vacío');
             }
@@ -13,7 +13,7 @@ public with sharing class GoogleBooksController {
                           EncodingUtil.urlEncode(searchTerm, 'UTF-8') + 
                           '&maxResults=20');
             req.setMethod('GET');
-            req.setTimeout(10000); // 10 segundos de timeout
+            req.setTimeout(10000); 
             
             Http http = new Http();
             HttpResponse res = http.send(req);
@@ -21,7 +21,7 @@ public with sharing class GoogleBooksController {
             if (res.getStatusCode() == 200) {
                 Map<String, Object> response = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
                 
-                // Conversión segura a List<Map<String, Object>>
+                
                 List<Object> items = (List<Object>) response.get('items');
                 List<Map<String, Object>> books = new List<Map<String, Object>>();
                 
@@ -52,7 +52,6 @@ public with sharing class GoogleBooksController {
         }
     }
 
-    // Método para libros recientes (con cache)
     @AuraEnabled(cacheable=true)
     public static List<Map<String, Object>> getNewReleases() {
         try {
@@ -79,7 +78,7 @@ public with sharing class GoogleBooksController {
                             'id' => book.get('id'),
                             'volumeInfo' => new Map<String, Object>{
                                 'title' => volumeInfo.get('title'),
-                                'description' => volumeInfo.get('description'), // Nueva línea
+                                'description' => volumeInfo.get('description'), 
                                 'authors' => volumeInfo.get('authors'),
                                 'imageLinks' => volumeInfo.get('imageLinks')
                             }

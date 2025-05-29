@@ -1,12 +1,16 @@
 <template>
   <div class="search-container">
-      <lightning-input
-          type="search"
-          label="Buscar en todos los libros"
-          placeholder="Escribe título o autor..."
-          value={searchTerm}
-          onchange={handleSearch}
-          variant="label-hidden"
-      ></lightning-input>
+    <lightning-input
+      type="search"
+      class="search-input"
+      label="Buscar en todos los libros"
+      placeholder="Escribe título o autor..."
+      value={searchTerm}
+      onchange={handleSearch}
+      variant="label-hidden"
+    ></lightning-input>
+    <span class="search-icon">
+      🔍
+    </span>
   </div>
 </template>

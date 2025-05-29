@@ -1,0 +1,61 @@
+/* Contenedor general */
+.slds-container_center {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título principal */
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2a2a2a;
+    text-align: center;
+}
+
+/* Estilo para cada tarjeta (envoltorio del lightning-card) */
+.favorite-book-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: white;
+}
+
+.favorite-book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenido textual dentro del card */
+.card-content-text {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Área de texto personalizada */
+.review-textarea textarea {
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+    font-size: 0.9rem;
+    border-radius: 6px;
+}
+
+
+.button-full {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    box-sizing: border-box;
+}
+
+
+.slds-grid.slds-gutters_small > .slds-col {
+    padding: 0.25rem 0;
+}
+
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+}

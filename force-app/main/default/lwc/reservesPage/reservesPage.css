@@ -1,0 +1,45 @@
+/* Contenedor general centrado */
+.slds-container_center {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Título principal */
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2a2a2a;
+    text-align: center;
+}
+
+/* Tarjeta de reserva */
+.reservation-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reservation-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Campos dentro de cada reserva */
+.reservation-field {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+/* Botón de cancelar con estilos */
+.button-cancel {
+    margin-top: 1rem;
+    display: block;
+    width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    box-sizing: border-box;
+}

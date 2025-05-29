@@ -3,10 +3,10 @@ import { NavigationMixin } from 'lightning/navigation'; // Añade esta importaci
 import getNewReleases from '@salesforce/apex/GoogleBooksController.getNewReleases';
 
 export default class bookSearch extends NavigationMixin(LightningElement) {
-    @track newReleases = [];    // Almacena los 12 libros iniciales
-    @track displayedBooks = []; // Libros a mostrar
+    @track newReleases = [];    
+    @track displayedBooks = []; 
     @track isLoading = true;
-    @track cardTitle = 'Últimos Lanzamientos'; // Título dinámico
+    @track cardTitle = 'Últimos Lanzamientos'; 
 
     connectedCallback() {
         this.loadInitialBooks();
@@ -23,7 +23,6 @@ export default class bookSearch extends NavigationMixin(LightningElement) {
             });
     }
 
-    // Procesa los datos para asegurar estructura consistente
     processBookData(books) {
         return books.map(book => {
             return {
@@ -46,30 +45,30 @@ export default class bookSearch extends NavigationMixin(LightningElement) {
         const searchData = event.detail;
         
         if (searchData.books === null) {
-            // Mostrar los 12 libros iniciales
+            
             this.displayedBooks = this.newReleases;
             this.cardTitle = 'Últimos Lanzamientos';
         } else {
-            // Mostrar resultados de búsqueda
+            
             this.displayedBooks = this.processBookData(searchData.books);
             this.cardTitle = `Resultados para "${searchData.searchTerm}"`;
         }
     }
 
     toggleDescriptionExpansion(event) {
-        event.stopPropagation(); // Añadir esto
+        event.stopPropagation(); 
         const bookId = event.target.dataset.id;
         const book = this.displayedBooks.find(b => b.id === bookId);
 
         if (book) {
-            // Acceder a isDescriptionExpanded dentro de volumeInfo
+            
             book.volumeInfo.isDescriptionExpanded = !book.volumeInfo.isDescriptionExpanded;
             this.displayedBooks = [...this.displayedBooks];
         }
     }
 
     handleBookClick(event) {
-        // Verificación más robusta
+        
         if (!event.target.closest('button')) {
             event.preventDefault();
             const bookId = event.currentTarget.dataset.id;

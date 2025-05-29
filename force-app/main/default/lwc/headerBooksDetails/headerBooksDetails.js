@@ -6,7 +6,7 @@ export default class HeaderMessage extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
-                url: '/home'
+                url: '/'
             }
         });
     }

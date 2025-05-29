@@ -1,0 +1,28 @@
+<template>
+  <div class="slds-container_center slds-p-around_large">
+    <h1 class="slds-text-heading_large slds-m-bottom_medium page-title">Mis Reservas</h1>
+
+    <template if:true={reservations}>
+      <template for:each={reservations} for:item="res">
+        <div key={res.id} class="reservation-card">
+          <p class="reservation-field"><strong>Título:</strong> {res.title}</p>
+          <p class="reservation-field"><strong>Fecha de reserva:</strong> {res.startDate}</p>
+          <p class="reservation-field"><strong>Fecha de devolución:</strong> {res.endDate}</p>
+          <p class="reservation-field"><strong>Estado:</strong> {res.status}</p>
+
+          <lightning-button 
+            class="button-cancel"
+            label="Cancelar Reserva" 
+            data-id={res.id} 
+            onclick={cancelReservationHandler}
+            variant="destructive">
+          </lightning-button>
+        </div>
+      </template>
+    </template>
+
+    <template if:true={error}>
+      <p class="slds-text-color_error">Error: {error.message}</p>
+    </template>
+  </div>
+</template>

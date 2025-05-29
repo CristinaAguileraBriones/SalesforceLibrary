@@ -1,9 +1,9 @@
 <template>
   <div class="slds-container_center slds-p-around_large">
-    <h1 class="slds-text-heading_large slds-m-bottom_medium">Mis Favoritos</h1>
+    <h1 class="slds-text-heading_large slds-m-bottom_medium page-title">Mis Favoritos</h1>
 
     <template if:true={isLoading}>
-      <lightning-spinner alternative-text="Cargando..." size="medium"></lightning-spinner>
+      <lightning-spinner class="loading-spinner" alternative-text="Cargando..." size="medium"></lightning-spinner>
     </template>
 
     <template if:true={error}>
@@ -14,60 +14,74 @@
       <div class="slds-grid slds-wrap">
         <template for:each={favorites} for:item="fav">
           <div key={fav.Id} class="slds-col slds-size_1-of-2 slds-p-around_small">
-            <lightning-card title={fav.Titulo__c} icon-name="utility:favorite">
-              <p class="slds-p-horizontal_small">Autor: {fav.Autor__c}</p>
 
-              <p class="slds-p-horizontal_small">
-                <lightning-textarea
-                  label="Tu reseña"
-                  value={fav.review}
-                  data-id={fav.Id}
-                  onchange={handleReviewChange}
-                  disabled={fav.readonly}>
-                </lightning-textarea>
-              </p>
+            <!-- Contenedor para aplicar hover -->
+            <div class="favorite-book-card">
+              <lightning-card title={fav.Titulo__c} icon-name="utility:favorite">
+                
+                <p class="slds-p-horizontal_small card-content-text">
+                  Autor: {fav.Autor__c}
+                </p>
 
-              <div class="slds-p-horizontal_small slds-m-top_small">
-                <div class="slds-grid slds-gutters_small">
-                  <div class="slds-col">
-                    <lightning-button
-                      variant="brand"
-                      label="Guardar Reseña"
-                      data-id={fav.Id}
-                      onclick={saveReview}
-                      disabled={fav.saveDisabled}>
-                    </lightning-button>
-                  </div>
-                  <div class="slds-col">
-                    <lightning-button
-                      variant="neutral"
-                      label="Editar Reseña"
-                      data-id={fav.Id}
-                      onclick={editReview}
-                      disabled={fav.editDisabled}>
-                    </lightning-button>
-                  </div>
-                  <div class="slds-col">
-                    <lightning-button
-                      variant="destructive"
-                      label="Eliminar Reseña"
-                      data-id={fav.Id}
-                      onclick={deleteReview}
-                      disabled={fav.deleteDisabled}>
-                    </lightning-button>
+                <p class="slds-p-horizontal_small card-content-text">
+                  <lightning-textarea
+                    label="Tu reseña"
+                    value={fav.review}
+                    data-id={fav.Id}
+                    onchange={handleReviewChange}
+                    disabled={fav.readonly}
+                    class="review-textarea">
+                  </lightning-textarea>
+                </p>
+
+                <div class="slds-p-horizontal_small slds-m-top_small">
+                  <div class="slds-grid slds-gutters_small">
+                    <div class="slds-col">
+                      <lightning-button
+                        class="button-full"
+                        variant="brand"
+                        label="Guardar Reseña"
+                        data-id={fav.Id}
+                        onclick={saveReview}
+                        disabled={fav.saveDisabled}>
+                      </lightning-button>
+                    </div>
+                    <div class="slds-col">
+                      <lightning-button
+                        class="button-full"
+                        variant="neutral"
+                        label="Editar Reseña"
+                        data-id={fav.Id}
+                        onclick={editReview}
+                        disabled={fav.editDisabled}>
+                      </lightning-button>
+                    </div>
+                    <div class="slds-col">
+                      <lightning-button
+                        class="button-full"
+                        variant="destructive"
+                        label="Eliminar Reseña"
+                        data-id={fav.Id}
+                        onclick={deleteReview}
+                        disabled={fav.deleteDisabled}>
+                      </lightning-button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <p class="slds-p-horizontal_small slds-m-top_medium">
-                <lightning-button
-                  variant="brand"
-                  label="Ver libro"
-                  data-bookid={fav.LibroId__c}
-                  onclick={navigateToBook}>
-                </lightning-button>
-              </p>
-            </lightning-card>
+                <p class="slds-p-horizontal_small slds-m-top_medium">
+                  <lightning-button
+                    class="button-full"
+                    variant="brand"
+                    label="Ver libro"
+                    data-bookid={fav.LibroId__c}
+                    onclick={navigateToBook}>
+                  </lightning-button>
+                </p>
+
+              </lightning-card>
+            </div>
+
           </div>
         </template>
       </div>
