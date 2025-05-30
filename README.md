@@ -1,18 +1,47 @@
-# Salesforce DX Project: Next Steps
+# 📚 Proyecto Biblioteca en Salesforce Experience Cloud
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Este proyecto consiste en una plataforma de gestión de biblioteca desarrollada sobre Salesforce Experience Cloud, que permite a los usuarios autenticados buscar libros, realizar reservas, dejar reseñas y marcar libros como favoritos. Todo esto se presenta a través de una interfaz moderna, rápida y responsiva, basada en componentes Lightning Web Components (LWC).
 
-## How Do You Plan to Deploy Your Changes?
+---
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+## ⚙️ Tecnologías Utilizadas
 
-## Configure Your Salesforce DX Project
+- **Salesforce Experience Cloud**: Framework base para la creación del portal público y privado.
+- **Apex**: Lógica del lado del servidor para controladores personalizados, validaciones y automatismos.
+- **SOQL (Salesforce Object Query Language)**: Consulta eficiente de datos en la plataforma Salesforce.
+- **Lightning Web Components (LWC)**: Creación de la interfaz de usuario con JavaScript moderno.
+- **Salesforce CLI (SFDX)**: Despliegue, autenticación y gestión de entornos de desarrollo.
+- **Visual Studio Code**: Editor principal, con el paquete de extensiones Salesforce Extension Pack.
+- **Postman**: Pruebas de integraciones externas (OAuth, Google Books API).
+- **GitHub**: Control de versiones, ramas y trabajo colaborativo.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+---
 
-## Read All About It
+## 🚀 Funcionalidades Principales
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+- 🔍 **Búsqueda de libros** a través de una barra de búsqueda dinámica conectada con la API de Google Books.
+- 📖 **Visualización de detalles** de cada libro incluyendo título, autor, portada y disponibilidad.
+- ⭐ **Sistema de favoritos**: los usuarios pueden marcar libros como favoritos para acceder rápidamente a ellos.
+- 📝 **Reseñas**: los usuarios pueden comentar libros que han leído.
+- 📅 **Reservas**: funcionalidad para reservar libros disponibles, con control de disponibilidad.
+- 👤 **Perfil de usuario**: muestra historial de reservas, libros favoritos y reseñas realizadas.
+
+
+---
+
+## 🛠️ Próximas Mejoras
+
+- 📬 **Automatización para administración**: Implementación de un trigger que envíe una notificación al administrador cada vez que se realice una reserva, permitiendo gestionar los préstamos sin revisión manual constante.
+- 🕒 **Procesamiento Batch Asíncrono**: Para gestionar grandes volúmenes de reservas sin sobrecargar Salesforce, se plantea incorporar clases batch que manejen la creación y gestión de reservas en segundo plano.
+- 🎨 **Mejoras en la interfaz**: Incorporación de diseño más atractivo y nuevas secciones como “Infantil”, y una zona de blog donde los usuarios puedan compartir recomendaciones o reseñas extendidas.
+
+
+---
+
+## 🧩 Estructura de Objetos Personalizados
+
+- **Libro__c**: Título, autor, ISBN, disponibilidad.
+- **Reserva__c**: Lookup a Usuario y Libro, con fecha de reserva y estado.
+- **Favoritos__c**: Relación N:M entre Usuario y Libro para libros favoritos.
+
+
